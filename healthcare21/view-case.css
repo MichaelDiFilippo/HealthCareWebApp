@@ -1,0 +1,111 @@
+.view-case-child {
+  position: absolute;
+  top: 944px;
+  left: 748px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-gray-400);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  width: 423px;
+  height: 76px;
+}
+.back-to-dashboard {
+  position: absolute;
+  top: 961px;
+  left: 833px;
+  font-size: var(--font-size-9xl);
+  display: inline-block;
+  width: 306px;
+  height: 41px;
+  cursor: pointer;
+}
+.view-case-child1,
+.view-case-child2,
+.view-case-inner,
+.view-case-item {
+  border: 1px solid var(--color-turquoise);
+  background-color: var(--color-gray-100);
+  position: absolute;
+  top: 712px;
+  left: 782px;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  box-sizing: border-box;
+  width: 562px;
+  height: 232px;
+}
+.view-case-child1,
+.view-case-child2,
+.view-case-inner {
+  top: 615px;
+  height: 82px;
+}
+.view-case-child1,
+.view-case-child2 {
+  top: 422px;
+  width: 534px;
+  height: 42px;
+}
+.view-case-child2 {
+  top: 518px;
+  height: 43px;
+}
+.diagnosis2,
+.doctor-id1,
+.patient-id1,
+.treatment2 {
+  position: absolute;
+  top: 517px;
+  left: 603px;
+  display: inline-block;
+  width: 167px;
+  height: 43px;
+}
+.diagnosis2,
+.patient-id1,
+.treatment2 {
+  top: 613px;
+  width: 141px;
+  height: 40px;
+}
+.patient-id1,
+.treatment2 {
+  top: 712px;
+  width: 167px;
+  height: 43px;
+}
+.patient-id1 {
+  top: 422px;
+  width: 142px;
+  height: 42px;
+}
+.case-number,
+.view-case-child3 {
+  position: absolute;
+  top: 326px;
+  height: 42px;
+}
+.view-case-child3 {
+  border: 1px solid var(--color-turquoise);
+  background-color: var(--color-gray-100);
+  left: 782px;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  box-sizing: border-box;
+  width: 534px;
+}
+.case-number {
+  left: 603px;
+  display: inline-block;
+  width: 182px;
+}
+.view-case {
+  position: relative;
+  background-color: var(--color-gray-300);
+  width: 100%;
+  height: 1080px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-white);
+  font-family: var(--font-inter);
+}

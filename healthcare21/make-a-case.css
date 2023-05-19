@@ -1,0 +1,91 @@
+.make-a-case-child {
+  position: absolute;
+  top: 944px;
+  left: 741px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-gray-400);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  width: 423px;
+  height: 76px;
+}
+.create-case {
+  position: absolute;
+  top: 961px;
+  left: 858px;
+  font-size: var(--font-size-9xl);
+  display: inline-block;
+  width: 306px;
+  height: 41px;
+  cursor: pointer;
+}
+.make-a-case-child1,
+.make-a-case-child2,
+.make-a-case-inner,
+.make-a-case-item {
+  border: 1px solid var(--color-turquoise);
+  background-color: var(--color-gray-100);
+  position: absolute;
+  top: 348px;
+  left: 693px;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  box-sizing: border-box;
+  width: 534px;
+  height: 42px;
+}
+.make-a-case-child1,
+.make-a-case-child2,
+.make-a-case-inner {
+  top: 446px;
+  height: 43px;
+}
+.make-a-case-child1,
+.make-a-case-child2 {
+  top: 151px;
+  height: 42px;
+}
+.make-a-case-child2 {
+  top: 249px;
+  height: 43px;
+}
+.diagnosis,
+.doctor-id,
+.patient-id,
+.treatment {
+  position: absolute;
+  top: 206px;
+  left: 693px;
+  display: inline-block;
+  width: 167px;
+  height: 43px;
+}
+.diagnosis,
+.patient-id,
+.treatment {
+  top: 308px;
+  width: 141px;
+  height: 40px;
+}
+.patient-id,
+.treatment {
+  top: 403px;
+  width: 167px;
+  height: 43px;
+}
+.patient-id {
+  top: 109px;
+  left: 692px;
+  width: 142px;
+  height: 42px;
+}
+.make-a-case {
+  position: relative;
+  background-color: var(--color-gray-400);
+  width: 100%;
+  height: 1080px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-white);
+  font-family: var(--font-inter);
+}

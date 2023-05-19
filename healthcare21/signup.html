@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./signup.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="signup1">
+      <div class="signup-child"></div>
+      <input
+        class="signup-item"
+        type="tel"
+        defaultvalue="(000)-000-0000"
+        maxlength="{10}"
+        minlength="{10}"
+        required
+        form
+      />
+
+      <button class="signup-inner" formaction></button>
+      <b class="email">Email:</b>
+      <b class="signup2" id="signupText">Signup</b>
+      <input
+        class="rectangle-input"
+        type="email"
+        defaultvalue="yourname@gmail.com"
+        required
+        form
+      />
+
+      <b class="phone-number">Phone Number:</b>
+      <input
+        class="signup-child1"
+        type="password"
+        maxlength="{32}"
+        minlength="{12}"
+        required
+        form
+      />
+
+      <input
+        class="signup-child2"
+        type="password"
+        maxlength="{32}"
+        minlength="{12}"
+        required
+        form
+      />
+
+      <b class="password">Password:</b>
+      <b class="confirm-password">Confirm password:</b>
+    </div>
+
+    <script>
+      var signupText = document.getElementById("signupText");
+      if (signupText) {
+        signupText.addEventListener("click", function (e) {
+          window.location.href = "./patient-inofrmation.html";
+        });
+      }
+      </script>
+  </body>
+</html>

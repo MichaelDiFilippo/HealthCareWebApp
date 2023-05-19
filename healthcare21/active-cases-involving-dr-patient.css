@@ -1,0 +1,107 @@
+.active-cases-involving-drpat-child {
+  position: absolute;
+  top: 90px;
+  left: 160px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-gray-400);
+  width: 1600px;
+  height: 900px;
+}
+.active-cases-involving-drpat-item {
+  position: absolute;
+  top: 585px;
+  left: 1123px;
+  background-color: var(--color-gray-200);
+  width: 579px;
+  height: 351px;
+}
+.active-cases-involving-drpat-inner {
+  border: 0;
+  background-color: var(--color-gray-400);
+  position: absolute;
+  top: 14px;
+  left: 160px;
+  border-radius: var(--br-3xs);
+  width: 1600px;
+  height: 63px;
+}
+.active-cases-involving-drpat-child1,
+.rectangle-a {
+  position: absolute;
+  top: 1001px;
+  border-radius: var(--br-3xs);
+  background-color: var(--color-gray-400);
+  height: 65px;
+}
+.rectangle-a {
+  text-decoration: none;
+  left: 581px;
+  width: 202px;
+  cursor: pointer;
+}
+.active-cases-involving-drpat-child1 {
+  left: 1109px;
+  width: 222px;
+}
+.create-case1,
+.signout1 {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+}
+.create-case1 {
+  top: 1021px;
+  left: 1124px;
+  font-size: var(--font-size-9xl);
+  width: 192px;
+  height: 53px;
+}
+.signout1 {
+  top: 1013px;
+  left: 611px;
+  width: 162px;
+  height: 42px;
+}
+.active-cases-involving-drpat-child2 {
+  position: absolute;
+  top: 585px;
+  left: 218px;
+  background-color: var(--color-gray-200);
+  width: 579px;
+  height: 351px;
+}
+.diagnosis1,
+.profile,
+.treatment1 {
+  position: absolute;
+  top: 529px;
+  left: 218px;
+  display: inline-block;
+  color: var(--color-ghostwhite);
+  width: 447px;
+  height: 80px;
+}
+.profile,
+.treatment1 {
+  left: 1124px;
+  width: 337px;
+  height: 55px;
+}
+.profile {
+  top: 21px;
+  left: 892px;
+  color: var(--color-white);
+  width: 136px;
+  height: 50px;
+}
+.active-cases-involving-drpat {
+  position: relative;
+  background-color: var(--color-gray-400);
+  width: 100%;
+  height: 1080px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-17xl);
+  color: var(--color-whitesmoke);
+  font-family: var(--font-inter);
+}

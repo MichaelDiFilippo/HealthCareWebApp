@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./admin-login.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="admin-login1">
+      <div class="admin-login-child"></div>
+      <button class="admin-login-item" id="rectangleButton"></button>
+      <input
+        class="admin-login-inner"
+        type="password"
+        maxlength="{32}"
+        minlength="{12}"
+        required
+        form
+      />
+
+      <b class="admin">Admin:</b>
+      <input
+        class="admin-login-child1"
+        type="text"
+        maxlength="{20}"
+        minlength="{8}"
+        required
+        name
+        form
+      />
+
+      <b class="password1">Password:</b>
+      <b class="login1" id="loginText">Login</b>
+    </div>
+
+    <script>
+      var rectangleButton = document.getElementById("rectangleButton");
+      if (rectangleButton) {
+        rectangleButton.addEventListener("click", function (e) {
+          window.location.href = "./admin-approval.html";
+        });
+      }
+      
+      var loginText = document.getElementById("loginText");
+      if (loginText) {
+        loginText.addEventListener("click", function (e) {
+          window.location.href = "./admin-approval.html";
+        });
+      }
+      </script>
+  </body>
+</html>

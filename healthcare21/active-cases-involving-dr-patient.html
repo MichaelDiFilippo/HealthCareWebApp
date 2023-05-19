@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./active-cases-involving-dr-patient.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="active-cases-involving-drpat">
+      <div class="active-cases-involving-drpat-child"></div>
+      <div class="active-cases-involving-drpat-item"></div>
+      <input class="active-cases-involving-drpat-inner" type="text" />
+
+      <a class="rectangle-a" id="rectangleLink"> </a>
+      <div class="active-cases-involving-drpat-child1"></div>
+      <b class="create-case1" id="createCaseText">Create Case</b>
+      <b class="signout1" id="signoutText">Signout</b>
+      <div class="active-cases-involving-drpat-child2"></div>
+      <b class="diagnosis1">Diagnosis</b>
+      <b class="treatment1">Treatment</b>
+      <b class="profile">Profile</b>
+    </div>
+
+    <script>
+      var rectangleLink = document.getElementById("rectangleLink");
+      if (rectangleLink) {
+        rectangleLink.addEventListener("click", function (e) {
+          window.location.href = "/";
+        });
+      }
+      
+      var createCaseText = document.getElementById("createCaseText");
+      if (createCaseText) {
+        createCaseText.addEventListener("click", function (e) {
+          window.location.href = "./make-a-case.html";
+        });
+      }
+      
+      var signoutText = document.getElementById("signoutText");
+      if (signoutText) {
+        signoutText.addEventListener("click", function (e) {
+          window.location.href = "/";
+        });
+      }
+      </script>
+  </body>
+</html>

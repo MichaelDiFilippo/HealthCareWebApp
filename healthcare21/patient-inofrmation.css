@@ -1,0 +1,121 @@
+.patient-inofrmation-child,
+.patient-inofrmation-child1,
+.patient-inofrmation-child2,
+.patient-inofrmation-inner,
+.patient-inofrmation-item {
+  border: 1px solid var(--color-turquoise);
+  background-color: var(--color-gray-100);
+  position: absolute;
+  top: 345px;
+  left: 693px;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  box-sizing: border-box;
+  width: 534px;
+  height: 42px;
+}
+.patient-inofrmation-child1,
+.patient-inofrmation-child2,
+.patient-inofrmation-inner,
+.patient-inofrmation-item {
+  top: 427px;
+  height: 43px;
+}
+.patient-inofrmation-child1,
+.patient-inofrmation-child2,
+.patient-inofrmation-inner {
+  top: 525px;
+  height: 42px;
+}
+.patient-inofrmation-child1,
+.patient-inofrmation-child2 {
+  top: 162px;
+}
+.patient-inofrmation-child2 {
+  top: 251px;
+  height: 43px;
+}
+.date-of-birth,
+.first-name,
+.gender,
+.last-name,
+.middle-name {
+  position: absolute;
+  top: 213px;
+  left: 693px;
+  display: inline-block;
+  width: 167px;
+  height: 43px;
+}
+.date-of-birth,
+.first-name,
+.gender,
+.last-name {
+  top: 303px;
+  width: 141px;
+  height: 40px;
+}
+.date-of-birth,
+.first-name,
+.gender {
+  top: 394px;
+  width: 167px;
+  height: 43px;
+}
+.first-name,
+.gender {
+  top: 481px;
+  width: 95px;
+  height: 42px;
+}
+.first-name {
+  top: 126px;
+  width: 142px;
+}
+.patient-inofrmation-child3,
+.patient-inofrmation-child4 {
+  border: 1px solid var(--color-turquoise);
+  background-color: var(--color-gray-100);
+  position: absolute;
+  top: 656px;
+  left: 693px;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  box-sizing: border-box;
+  width: 534px;
+  height: 42px;
+}
+.patient-inofrmation-child4 {
+  top: 769px;
+}
+.address,
+.social-security-number {
+  position: absolute;
+  top: 603px;
+  left: 693px;
+  display: inline-block;
+  width: 113px;
+  height: 42px;
+}
+.social-security-number {
+  top: 725px;
+  width: 200px;
+  height: 33px;
+}
+.submit {
+  position: absolute;
+  top: 947px;
+  left: 909px;
+  cursor: pointer;
+}
+.patient-inofrmation {
+  position: relative;
+  background-color: var(--color-gray-400);
+  width: 100%;
+  height: 1080px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-white);
+  font-family: var(--font-inter);
+}

@@ -1,0 +1,105 @@
+.signup-child {
+  position: absolute;
+  top: 148px;
+  left: 465px;
+  background-color: var(--color-gray-300);
+  width: 990px;
+  height: 696px;
+}
+.signup-inner,
+.signup-item {
+  border: 1px solid var(--color-turquoise);
+  background-color: var(--color-gray-100);
+  position: absolute;
+  top: 335px;
+  left: 702px;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  box-sizing: border-box;
+  width: 534px;
+  height: 43px;
+}
+.signup-inner {
+  cursor: pointer;
+  border: 1px solid var(--color-gray-300);
+  padding: 0;
+  background-color: var(--color-gray-300);
+  top: 679px;
+  left: 701px;
+  width: 535px;
+  height: 63px;
+}
+.email,
+.signup2 {
+  position: absolute;
+  top: 203px;
+  left: 702px;
+  display: inline-block;
+  width: 83px;
+  height: 23px;
+}
+.signup2 {
+  top: 695px;
+  left: 916px;
+  width: 88px;
+  height: 32px;
+  cursor: pointer;
+}
+.rectangle-input {
+  border: 1px solid var(--color-turquoise);
+  background-color: var(--color-gray-100);
+  position: absolute;
+  top: 243px;
+  left: 702px;
+  border-radius: var(--br-3xs);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  box-sizing: border-box;
+  width: 534px;
+  height: 45px;
+}
+.phone-number {
+  position: absolute;
+  top: 305px;
+  left: 702px;
+  display: inline-block;
+  width: 185px;
+  height: 52px;
+}
+.signup-child1,
+.signup-child2 {
+  border: 0;
+  background-color: var(--color-gray-100);
+  position: absolute;
+  top: 449px;
+  left: 702px;
+  border-radius: var(--br-3xs);
+  width: 534px;
+  height: 47px;
+}
+.signup-child2 {
+  top: 576px;
+}
+.confirm-password,
+.password {
+  position: absolute;
+  top: 402px;
+  left: 702px;
+  display: inline-block;
+  width: 181px;
+  height: 47px;
+}
+.confirm-password {
+  top: 505px;
+  left: 706px;
+}
+.signup1 {
+  position: relative;
+  background: linear-gradient(#12071e, #12071e), rgba(30, 30, 30, 0.67);
+  width: 100%;
+  height: 1080px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-5xl);
+  color: var(--color-white);
+  font-family: var(--font-inter);
+}

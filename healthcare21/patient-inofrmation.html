@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./patient-inofrmation.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="patient-inofrmation">
+      <input
+        class="patient-inofrmation-child"
+        type="text"
+        maxlength="{30}"
+        minlength="{2}"
+        required
+        form
+      />
+
+      <input
+        class="patient-inofrmation-item"
+        type="date"
+        defaultvalue="mm/dd/yyyy"
+        required
+        form
+      />
+
+      <input
+        class="patient-inofrmation-inner"
+        type="text"
+        maxlength="{1}"
+        minlength="{1}"
+        required
+        form
+      />
+
+      <input
+        class="patient-inofrmation-child1"
+        type="text"
+        defaultvalue="firstname"
+        maxlength="{30}"
+        minlength="{3}"
+        required
+        name
+        form
+      />
+
+      <input
+        class="patient-inofrmation-child2"
+        type="text"
+        defaultvalue="Middle Name"
+        maxlength="{32}"
+        minlength="{2}"
+        name
+      />
+
+      <b class="middle-name">Middle Name:</b>
+      <b class="last-name">Last Name:</b>
+      <b class="date-of-birth">Date of Birth:</b>
+      <b class="gender">Gender:</b>
+      <b class="first-name">First Name:</b>
+      <b class="middle-name">Middle Name:</b>
+      <b class="last-name">Last Name:</b>
+      <b class="date-of-birth">Date of Birth:</b>
+      <b class="gender">Gender:</b>
+      <b class="first-name">First Name:</b>
+      <b class="middle-name">Middle Name:</b>
+      <b class="last-name">Last Name:</b>
+      <b class="date-of-birth">Date of Birth:</b>
+      <b class="gender">Gender:</b>
+      <b class="first-name">First Name:</b>
+      <b class="middle-name">Middle Name:</b>
+      <b class="last-name">Last Name:</b>
+      <b class="date-of-birth">Date of Birth:</b>
+      <b class="gender">Gender:</b>
+      <b class="first-name">First Name:</b>
+      <b class="middle-name">Middle Name:</b>
+      <b class="last-name">Last Name:</b>
+      <b class="date-of-birth">Date of Birth:</b>
+      <b class="gender">Gender:</b>
+      <b class="first-name">First Name:</b>
+      <input
+        class="patient-inofrmation-child3"
+        type="text"
+        maxlength="{100}"
+        minlength="{8}"
+        required
+        form
+      />
+
+      <input
+        class="patient-inofrmation-child4"
+        type="number"
+        min="{9}"
+        max="{9}"
+        required
+        form
+      />
+
+      <b class="address">Address:</b>
+      <b class="social-security-number">SSN:</b>
+      <b class="submit" id="submitText">Submit </b>
+    </div>
+
+    <script>
+      var submitText = document.getElementById("submitText");
+      if (submitText) {
+        submitText.addEventListener("click", function (e) {
+          window.location.href = "/";
+        });
+      }
+      </script>
+  </body>
+</html>
