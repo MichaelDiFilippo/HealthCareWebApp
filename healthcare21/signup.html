@@ -11,9 +11,11 @@
     />
   </head>
   <body>
+    <form action="signup.php" method="post" id="signup" novalidate>
     <div class="signup1">
       <div class="signup-child"></div>
       <input
+        name ="phone_number"
         class="signup-item"
         type="tel"
         defaultvalue="(000)-000-0000"
@@ -27,6 +29,7 @@
       <b class="email">Email:</b>
       <b class="signup2" id="signupText">Signup</b>
       <input
+        name = "email"
         class="rectangle-input"
         type="email"
         defaultvalue="yourname@gmail.com"
@@ -36,6 +39,7 @@
 
       <b class="phone-number">Phone Number:</b>
       <input
+        name ="password"
         class="signup-child1"
         type="password"
         maxlength="{32}"
@@ -46,6 +50,7 @@
 
       <input
         class="signup-child2"
+        name = "confirm-password"
         type="password"
         maxlength="{32}"
         minlength="{12}"
@@ -56,7 +61,7 @@
       <b class="password">Password:</b>
       <b class="confirm-password">Confirm password:</b>
     </div>
-
+  </form>
     <script>
       var signupText = document.getElementById("signupText");
       if (signupText) {
