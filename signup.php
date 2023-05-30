@@ -1,54 +1,94 @@
 <?php
 
-//email 
-if ( ! filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$mysqli = include __DIR__ . "/database.php";
+session_start();
+
+// Validate input
+if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     die("Email is required");
 }
-//phone
-if (preg_match("/[a-z]", $_POST["phone_number"])){
+
+// Check phone number
+if (preg_match("/[a-z]/", $_POST["phone_number"])) {
     die("Phone number cannot contain any letters");
 }
-//remove special chars from phone number
-preg_replace('/[^\dxX]/', '', $_POST["phone_number"]);
 
-//password 
-if (strlen($_POST["password"]) < 12){
-    die("Password doesn't meet minimum length requirements of 12 Characters");
-}
-if (! preg_match("/[a-z]i", $_POST["password"])){
-    die("Password doesn't have enough letters");
-}
-if (! preg_match("/[0-9]", $_POST["password"])){
-    die("Password doesn't have enough numbers");
-}
-//confirm password 
-if ($_POST["password"] !== $_POST["confirm-password"]){
-    die("Password do not match");
-}
-//hash password 
-$password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT); 
+// Remove special chars from phone number
+$_POST["phone_number"] = preg_replace('/[^\dxX]/', '', $_POST["phone_number"]);
 
+// Enter username
+$username = $_POST['username'];
 
-//gets access to db 
-$mysqli = require __DIR__ . "/database.php";
+// Password validation and hashing
+$password = $_POST["password"];
+$password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-//inserts values into db 
-$sql = "INSERT INTO user (email, phone_number, password_hash)
-        values (?, ?,?)";
-$stmt = $mysqli->stmt_init();
+// Include AWS SDK for PHP and setup KMS client
+require 'vendor/autoload.php';
 
-if( ! stmt->prepare($sql)) {
+use Aws\Kms\KmsClient;
+use Aws\Credentials\CredentialProvider;
+
+$provider = CredentialProvider::defaultProvider();
+$kmsClient = new KmsClient([
+    'region'      => 'us-west-2',
+    'version'     => 'latest',
+    'credentials' => $provider
+]);
+
+// Generate a unique user_id
+$user_id = uniqid();
+
+// Generate a random IV
+$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+
+// Encrypt email
+$email = $_POST["email"];
+$result = $kmsClient->generateDataKey([
+    'KeyId'   => 'arn:aws:kms:us-west-2:576795985210:key/a5326fd9-2492-44b7-bcce-d5f2fcf0dfbd',
+    'KeySpec' => 'AES_256'
+]);
+$encrypted_email = openssl_encrypt($email, 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+
+// Encrypt phone number
+$phone_number = $_POST["phone_number"];
+$encrypted_phone_number = openssl_encrypt($phone_number, 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+
+// Combine IV and encrypted data
+$encrypted_email = base64_encode($iv . $encrypted_email);
+$encrypted_phone_number = base64_encode($iv . $encrypted_phone_number);
+
+// SQL query to insert user
+$sql = "INSERT INTO users (user_id, username, email, phone_number, password) VALUES (?, ?, ?, ?, ?)";
+$stmt = $mysqli->prepare($sql);
+
+if (!$stmt) {
     die("Error with DB: " . $mysqli->error);
 }
 
-$stmt->bind_param("sis", $_POST["email"],$_POST["phone-number"], $password_hash);
+$stmt->bind_param("sssss", $user_id, $username, $encrypted_email, $encrypted_phone_number, $password_hash);
 
-//executes and takes new account to patient info page and throws error if there is an issue with entry 
-if ($stmt->executes()){
-    header("Location: patient-inofrmation.html");
+// Execute the statement and handle possible errors
+if (!$stmt->execute()) {
+    // If there is a duplicate key error
+    if ($mysqli->errno == 1062) {
+        die('Error: Duplicate entry');
+    } else {
+        die('Error: (' . $stmt->errno . ') ' . $stmt->error);
+    }
+} else {
+    if ($stmt->affected_rows === 0) {
+        exit('No rows were inserted');
+    }
+
+    $stmt->close();
+
+    header("Location: login.html");
     exit;
 }
-else{
-    die($mysqli->error . " " . $mysqli->errno);
-}
 ?>
+

@@ -1,0 +1,43 @@
+<?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$mysqli = include __DIR__ . "/database.php";
+session_start();
+
+// Retrieve user_id from session
+$user_id = $_SESSION['user_id'];
+
+// Validate input
+if (empty($_POST["firstname"]) || empty($_POST["lastname"]) || empty($_POST["middlename"]) || empty($_POST["dob"]) || empty($_POST["gender"]) || empty($_POST["height"]) || empty($_POST["weight"]) || empty($_POST["ethnicity"]) || empty($_POST["address"]) || empty($_POST["ssn"])) {
+    die("All fields are required");
+}
+
+//date formatting
+
+// SQL query to insert patient information
+$sql = "INSERT INTO patients (user_id, firstname, middlename, lastname, dob, gender, height, weight, ethnicity, address, ssn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$stmt = $mysqli->prepare($sql);
+
+if (!$stmt) {
+    die("Error with DB: " . $mysqli->error);
+}
+
+$stmt->bind_param("sssssssssss", $user_id, $_POST["firstname"], $_POST["middlename"], $_POST["lastname"], $_POST["dob"], $_POST["gender"], $_POST["height"], $_POST["weight"], $_POST["ethnicity"], $_POST["address"], $_POST["ssn"]);
+
+if ($stmt->execute()) {
+    if ($stmt->affected_rows === 0) {
+        exit('No rows were inserted into patients');
+    }
+
+    $stmt->close();
+
+    header("Location: login.html");  // Redirect to view case page
+    exit;
+} else {
+	die('Error : (' . $stmt->errno . ') ' . $stmt->error);
+}
+?>
+

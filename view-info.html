@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Patient Information</title>
+    <script>
+      function getPatientInfo() {
+        fetch('view-info.php')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('patientInfo').innerHTML = data;
+          });
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="getPatientInfo()">Get Patient Information</button>
+    <div id="patientInfo"></div>
+    <form action="appointment.html">
+      <input type="submit" value="Go to Appointment Page">
+    </form>
+  </body>
+</html>
+

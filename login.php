@@ -1,67 +1,58 @@
 <?php
-$is_invalid = false;
-if ($_SERVER["REQUEST_METHOD"] === "POST"){
-    
-    $mysqli = require __DIR__ . "/databse.php";
+file_put_contents('debug.txt', print_r($_SERVER, true));
+ob_start();  // start output buffering
 
-    $sql = sprintf("SELECT * FROM  users WHERE email = '%s'", $mysqli->real_escape_string($_POST["email"]));
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-    $mysqli->query($sql);
+$mysqli = include __DIR__ . "/database.php";
+session_start();
 
-    $result = $mysqli->query($sql);
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve the username and password from the form
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    $user = $result->fetch_assoc();
+    // SQL query to check if the username exists and retrieve the hashed password
+    $sql = "SELECT * FROM users WHERE username = ?";
+    $stmt = $mysqli->prepare($sql);
 
-    if($user){
-
-        if(password_verify($_POST["password"], $user["password_hash"])){
-
-            session_start();
-            $_SESSION["user_id"] = $user["id"];
-            header("Location: index.php");
-            exit;
-
-        }
+    if (!$stmt) {
+        die("Error with DB: " . $mysqli->error);
     }
-    $is_valid = true;
+
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        echo "User fetched from DB: " . $row['username'];  // Debug message
+
+        $hashedPassword = $row['password'];
+
+        // Verify the password
+        if (password_verify($password, $hashedPassword)) {
+            // Password is correct, set the user_id in the session
+            $_SESSION['user_id'] = $row['user_id'];
+
+            // Redirect to the logged-in page
+            echo "Ready to redirect";  // Debug message
+            ob_end_clean();  // Clean the output buffer
+            header("Location: patient-information.html");
+            exit();
+        } else {
+            echo "Password verification failed";  // Debug message
+        }
+    } else {
+        echo "User not found";  // Debug message
+    }
+
+} else {
+    echo "Form was not submitted via POST";  // Debug message
 }
 
 ?>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <link rel="stylesheet" href="./global.css" />
-    <link rel="stylesheet" href="./login.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-    />
-  </head>
-  <body>
-    <?php if ($is_invalid): ?>
-        <em>Invalid login</em>
-    <?php endif; ?>
-
-    <form method="post" id="login" novalidate>
-        
-    <label for="email">email</label>
-    <input type="email" name="email" id="email"
-            value="<?= htmlspecialchars($_POST["email"] ?? "") ?>">
-    
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password">
-  </form>
-
-    <script>
-      var loginText = document.getElementById("loginText");
-      if (loginText) {
-        loginText.addEventListener("click", function (e) {
-          window.location.href = "./active-cases-involving-dr-patient.html";
-        });
-      }
-      </script>
-  </body>
-</html>
