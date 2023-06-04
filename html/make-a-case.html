@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./make-a-case.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="make-a-case">
+      <div class="make-a-case-child"></div>
+      <b class="create-case" id="createCaseText">Create Case</b>
+      <input class="make-a-case-item" type="text" />
+
+      <input class="make-a-case-inner" type="text" />
+
+      <input class="make-a-case-child1" type="text" />
+
+      <input class="make-a-case-child2" type="text" />
+
+      <b class="doctor-id">Doctor ID:</b>
+      <b class="diagnosis">Diagnosis:</b>
+      <b class="treatment">Treatment:</b>
+      <b class="patient-id">Patient ID:</b>
+    </div>
+
+    <script>
+      var createCaseText = document.getElementById("createCaseText");
+      if (createCaseText) {
+        createCaseText.addEventListener("click", function (e) {
+          window.location.href = "./active-cases-involving-dr-patient.html";
+        });
+      }
+      </script>
+  </body>
+</html>

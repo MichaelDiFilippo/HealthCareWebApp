@@ -1,0 +1,82 @@
+<?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$mysqli = include __DIR__ . "/database.php";
+session_start();
+
+// Retrieve user_id from session
+$user_id = $_SESSION['user_id'];
+echo "Users ID from session: " . $user_id;
+// Include AWS SDK for PHP and setup KMS client
+require 'vendor/autoload.php';
+
+use Aws\Kms\KmsClient;
+use Aws\Credentials\CredentialProvider;
+
+$provider = CredentialProvider::defaultProvider();
+$kmsClient = new KmsClient([
+    'region'      => 'us-west-2',
+    'version'     => 'latest',
+    'credentials' => $provider
+]);
+
+// Generate a random IV
+$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+
+// Generate KMS Data Key
+$result = $kmsClient->generateDataKey([
+    'KeyId'   => 'arn:aws:kms:us-west-2:576795985210:key/a5326fd9-2492-44b7-bcce-d5f2fcf0dfbd',
+    'KeySpec' => 'AES_256'
+]);
+
+// Encrypt all input fields
+$firstname = openssl_encrypt($_POST["firstname"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$lastname = openssl_encrypt($_POST["lastname"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$middlename = openssl_encrypt($_POST["middlename"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$dob = openssl_encrypt($_POST["dob"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$gender = openssl_encrypt($_POST["gender"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$height = openssl_encrypt($_POST["height"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$weight = openssl_encrypt($_POST["weight"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$ethnicity = openssl_encrypt($_POST["ethnicity"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$address = openssl_encrypt($_POST["address"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+$ssn = openssl_encrypt($_POST["ssn"], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+
+// Combine IV and encrypted data
+$firstname = base64_encode($iv . $firstname);
+$lastname = base64_encode($iv . $lastname);
+$middlename = base64_encode($iv . $middlename);
+$dob = base64_encode($iv . $dob);
+$gender = base64_encode($iv . $gender);
+$height = base64_encode($iv . $height);
+$weight = base64_encode($iv . $weight);
+$ethnicity = base64_encode($iv . $ethnicity);
+$address = base64_encode($iv . $address);
+$ssn = base64_encode($iv . $ssn);
+
+// SQL query to insert patient information
+$sql = "INSERT INTO patients (user_id, firstname, middlename, lastname, dob, gender, height, weight, ethnicity, address, ssn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$stmt = $mysqli->prepare($sql);
+
+if (!$stmt) {
+    die("Error with DB: " . $mysqli->error);
+}
+
+$stmt->bind_param("sssssssssss", $user_id, $firstname, $middlename, $lastname, $dob, $gender, $height, $weight, $ethnicity, $address, $ssn);
+
+if ($stmt->execute()) {
+    if ($stmt->affected_rows === 0) {
+        exit('No rows were inserted into patients');
+    }
+
+    $stmt->close();
+
+    header("Location: view-info.html");  // Redirect to view case page
+    exit;
+} else {
+    die('Error : (' . $stmt->errno . ') ' . $stmt->error);
+}
+?>
+

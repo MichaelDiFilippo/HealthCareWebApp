@@ -1,0 +1,110 @@
+<?php
+session_start();
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+$mysqli = include __DIR__ . "/database.php";
+
+// Input validation and sanitation
+$fields = ['username', 'email', 'phone_number', 'password'];
+foreach ($fields as $field) {
+    if (!isset($_POST[$field])) {
+        die("Missing field: $field");
+    }
+
+    $_POST[$field] = filter_var($_POST[$field], FILTER_SANITIZE_STRING);
+
+    if (!$_POST[$field]) {
+        die("Invalid $field");
+    }
+}
+
+// Email validation
+if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+    die("Invalid email format");
+}
+
+// Check phone number
+if (preg_match("/[a-z]/i", $_POST["phone_number"])) {
+    die("Phone number can only contain numbers");
+}
+
+// Remove special chars from phone number
+$_POST["phone_number"] = preg_replace('/[^\dxX]/', '', $_POST["phone_number"]);
+
+// Password length validation
+if (strlen($_POST["password"]) < 12) {
+    die("Password must be at least 12 characters long");
+}
+
+// Password hashing
+$_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+// Include AWS SDK for PHP and setup KMS client
+require 'vendor/autoload.php';
+
+use Aws\Kms\KmsClient;
+use Aws\Credentials\CredentialProvider;
+
+$provider = CredentialProvider::defaultProvider();
+$kmsClient = new KmsClient([
+    'region'      => 'us-west-2',
+    'version'     => 'latest',
+    'credentials' => $provider
+]);
+
+// Generate a unique user_id
+$user_id = uniqid();
+
+// Generate a random IV
+$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+
+// Encrypt data
+$result = $kmsClient->generateDataKey([
+    'KeyId'   => 'arn:aws:kms:us-west-2:576795985210:key/a5326fd9-2492-44b7-bcce-d5f2fcf0dfbd',
+    'KeySpec' => 'AES_256'
+]);
+
+$encrypted_fields = [];
+foreach ($fields as $field) {
+    $encrypted_fields[$field] = openssl_encrypt($_POST[$field], 'aes-256-cbc', $result['Plaintext'], OPENSSL_RAW_DATA, $iv);
+    $encrypted_fields[$field] = base64_encode($iv . $encrypted_fields[$field]);
+}
+
+// SQL query to insert user
+$sql = "INSERT INTO users (user_id, username, email, phone_number, password) VALUES (?, ?, ?, ?, ?)";
+$stmt = $mysqli->prepare($sql);
+
+if (!$stmt) {
+    die("Error with DB: " . $mysqli->error);
+}
+
+$stmt->bind_param("sssss", $user_id, $encrypted_fields['username'], $encrypted_fields['email'], $encrypted_fields['phone_number'], $encrypted_fields['password']);
+
+if ($stmt->execute()) {
+    if ($stmt->affected_rows === 0) {
+        exit('No rows were inserted');
+    }
+
+    $stmt->close();
+
+    // Save the username in the session
+    $_SESSION['username'] = $_POST['username'];
+
+    // Regenerate CSRF token
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+    // Print all values
+    foreach ($_POST as $key => $value) {
+        echo "Key: $key, Value: $value<br>";
+    }
+
+    header("Location: login.html");
+    exit;
+} else {
+    die('Error : (' . $stmt->errno . ') ' . $stmt->error);
+}
+?>
+
