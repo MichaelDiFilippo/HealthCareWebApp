@@ -28,6 +28,59 @@ $result = $kmsClient->generateDataKey([
 $dataKey = $result['Plaintext'];
 $cipherblob = $result['CiphertextBlob'];
 
+//Rules for input validation
+
+$validationRules =[
+    'firstname' => FILTER_SANITIZE_STRING,
+    'lastname' => FILTER_SANITIZE_STRING,
+    'middlename' => FILTER_SANITIZE_STRING,
+    'dob' => FILTER_SANITIZE_STRING,
+    'gender' => FILTER_SANITIZE_STRING,
+    'height' => FILTER_SANITIZE_FLOAT,
+    'weight' => FILTER_SANITIZE_FLOAT,
+    'ethnicity' => FILTER_SANITIZE_STRING,
+    'address' => FILTER_SANITIZE_STRING,
+    'ssn' => FILTER_SANITIZE_STRING
+];
+
+//validates input 
+
+$filteredInputs = [];
+
+foreach ($validationRules as $field => $filter) {
+    $input = $_POST[$field] ?? null; // check to see if each field is filled 
+
+    // Validate and sanitize the input
+    $filteredInput = filter_var($input, $filter);
+
+    // stores input in the array 
+    $filteredInputs[$field] = $filteredInput;
+}
+
+//error handling
+$validationErrors = [];
+
+foreach ($filteredInputs as $field => $value) {
+    if ($value === false) {
+        $validationErrors[] = $field;
+    }
+}
+
+if (!empty($validationErrors)) {
+    // Validation errors occurred, handle them appropriately
+    $_SESSION['errors'] = $validationErrors;
+    // redirects the user back to the form and display error messages
+    header("Location: patient-information.html");
+    exit();
+} else {
+    // Inputs are valid. Proceeds to encryption. 
+}
+
+
+
+
+
+
 $fields = ['firstname', 'lastname', 'middlename', 'dob', 'gender', 'height', 'weight', 'ethnicity', 'address', 'ssn'];
 $encrypted_fields = [];
 
