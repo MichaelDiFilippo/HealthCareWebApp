@@ -25,6 +25,15 @@ $username = $_POST['username'];
 
 // Password validation and hashing
 $password = $_POST["password"];
+//makes sure 1 lower and upper case letter, 1 non-alphanumberic, and 1 numeric is in the password and it is at least 12 characters
+$_POST["password"] = preg_match('/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{12,}$/', $password);
+
+if ($_POST["password"] = !preg_match('/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{12,}$/', $password)){
+
+    //exception for invalid input
+    throw new Exception("Invalid password format. Password must contain at least one number, one uppercase, one lowercase, one non-alphanumeric, and at least 12 characters in length.");
+}
+
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 // Include AWS SDK for PHP and setup KMS client
